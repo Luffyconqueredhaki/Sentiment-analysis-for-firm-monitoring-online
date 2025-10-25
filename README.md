@@ -14,25 +14,39 @@ CI/CD: GitHub Actions
 Linguaggio: Python 3.8+
 
 📂 Struttura del Progetto:
--
-├── notebooks/
+Sentiment-analysis-for-firm-monitoring-online/
+│
+├── 📓 notebooks/
 │   └── Progetto-HF-GITHUB-PROAI-MLOPS-OTTAVIANI-FLAVIO-RUBENS.ipynb
-├── src/
+│
+├── 🐍 src/
 │   ├── __init__.py
-│   ├── sentiment_analyzer.py
-│   ├── data_processor.py
-│   └── utils.py
-├── data/
-│   └── sample_tweets.csv
-├── models/
+│   ├── sentiment_analyzer.py      # Classe principale per analisi sentiment
+│   ├── data_processor.py           # Preprocessing dei dati
+│   └── utils.py                    # Funzioni utility
+│
+├── 📊 data/
+│   └── sample_tweets.csv           # Dataset di esempio
+│
+├── 🤖 models/
 │   └── (modelli salvati localmente)
-├── .github/
+│
+├── 🔧 scripts/
+│   ├── deploy_to_hf.py            # Script deploy Hugging Face
+│   ├── evaluate_model.py          # Valutazione performance
+│   └── monitor_model.py           # Monitoraggio continuo
+│
+├── ✅ tests/
+│   └── test_sentiment_analyzer.py # Unit tests
+│
+├── ⚙️ .github/
 │   └── workflows/
-│       └── ci-cd.yml
-├── requirements.txt
-├── setup.py
-├── README.md
-└── .gitignore
+│       └── ci-cd.yml              # Pipeline CI/CD
+│
+├── 📋 requirements.txt            # Dipendenze Python
+├── 🔨 setup.py                    # Setup installazione
+├── 📖 README.md                   # Documentazione
+└── 🚫 .gitignore                  # File ignorati da Git
 
 
 # Clone repository
