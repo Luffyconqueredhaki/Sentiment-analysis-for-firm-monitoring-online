@@ -13,42 +13,48 @@ Deploy: Hugging Face Hub
 CI/CD: GitHub Actions
 Linguaggio: Python 3.8+
 
-📂 Struttura del Progetto:
-Sentiment-analysis-for-firm-monitoring-online/
-│
-├── notebooks/
-│   └── Progetto-HF-GITHUB-PROAI-MLOPS-
-│       OTTAVIANI-FLAVIO-RUBENS.ipynb
-│
-├── src/
-│   ├── __init__.py
-│   ├── sentiment_analyzer.py
-│   ├── data_processor.py
-│   └── utils.py
-│
-├── data/
-│   └── sample_tweets.csv
-│
-├── models/
-│   └── (modelli salvati)
-│
-├── scripts/
-│   ├── deploy_to_hf.py
-│   ├── evaluate_model.py
-│   └── monitor_model.py
-│
-├── tests/
-│   ├── __init__.py
-│   └── test_sentiment_analyzer.py
-│
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml
-│
-├── requirements.txt
-├── setup.py
-├── README.md
-└── .gitignore
+📂 Struttura del Progetto
+Directory e File
+📓 notebooks/
+
+Progetto-HF-GITHUB-PROAI-MLOPS-OTTAVIANI-FLAVIO-RUBENS.ipynb - Notebook principale del progetto
+
+🐍 src/ (Codice sorgente)
+
+__init__.py - Inizializzazione package
+sentiment_analyzer.py - Classe per l'analisi del sentiment
+data_processor.py - Preprocessing e gestione dati
+utils.py - Funzioni di utilità
+
+📊 data/ (Dataset)
+
+sample_tweets.csv - Dataset di esempio con tweet etichettati
+
+🤖 models/ (Modelli ML)
+
+Cartella per i modelli addestrati salvati localmente
+
+🔧 scripts/ (Automazione)
+
+deploy_to_hf.py - Script per deploy su Hugging Face Hub
+evaluate_model.py - Script per valutazione performance del modello
+monitor_model.py - Script per monitoraggio continuo
+
+✅ tests/ (Testing)
+
+__init__.py - Inizializzazione package test
+test_sentiment_analyzer.py - Unit test per sentiment analyzer
+
+⚙️ .github/workflows/ (CI/CD)
+
+ci-cd.yml - Pipeline automatizzata GitHub Actions
+
+📋 File di configurazione (root)
+
+requirements.txt - Lista dipendenze Python
+setup.py - Configurazione installazione package
+README.md - Documentazione principale
+.gitignore - File esclusi da Git
 
 # Clone repository
 git clone https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online.git
