@@ -17,7 +17,8 @@ Linguaggio: Python 3.8+
 Sentiment-analysis-for-firm-monitoring-online/
 │
 ├── notebooks/
-│   └── Progetto-HF-GITHUB-PROAI-MLOPS-OTTAVIANI-FLAVIO-RUBENS.ipynb
+│   └── Progetto-HF-GITHUB-PROAI-MLOPS-
+│       OTTAVIANI-FLAVIO-RUBENS.ipynb
 │
 ├── src/
 │   ├── __init__.py
@@ -48,7 +49,6 @@ Sentiment-analysis-for-firm-monitoring-online/
 ├── setup.py
 ├── README.md
 └── .gitignore
-
 
 # Clone repository
 git clone https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online.git
