@@ -16,37 +16,38 @@ Linguaggio: Python 3.8+
 📂 Struttura del Progetto:
 Sentiment-analysis-for-firm-monitoring-online/
 │
-├── 📓 notebooks/
+├── notebooks/
 │   └── Progetto-HF-GITHUB-PROAI-MLOPS-OTTAVIANI-FLAVIO-RUBENS.ipynb
 │
-├── 🐍 src/
+├── src/
 │   ├── __init__.py
-│   ├── sentiment_analyzer.py      # Classe principale per analisi sentiment
-│   ├── data_processor.py           # Preprocessing dei dati
-│   └── utils.py                    # Funzioni utility
+│   ├── sentiment_analyzer.py
+│   ├── data_processor.py
+│   └── utils.py
 │
-├── 📊 data/
-│   └── sample_tweets.csv           # Dataset di esempio
+├── data/
+│   └── sample_tweets.csv
 │
-├── 🤖 models/
-│   └── (modelli salvati localmente)
+├── models/
+│   └── (modelli salvati)
 │
-├── 🔧 scripts/
-│   ├── deploy_to_hf.py            # Script deploy Hugging Face
-│   ├── evaluate_model.py          # Valutazione performance
-│   └── monitor_model.py           # Monitoraggio continuo
+├── scripts/
+│   ├── deploy_to_hf.py
+│   ├── evaluate_model.py
+│   └── monitor_model.py
 │
-├── ✅ tests/
-│   └── test_sentiment_analyzer.py # Unit tests
+├── tests/
+│   ├── __init__.py
+│   └── test_sentiment_analyzer.py
 │
-├── ⚙️ .github/
+├── .github/
 │   └── workflows/
-│       └── ci-cd.yml              # Pipeline CI/CD
+│       └── ci-cd.yml
 │
-├── 📋 requirements.txt            # Dipendenze Python
-├── 🔨 setup.py                    # Setup installazione
-├── 📖 README.md                   # Documentazione
-└── 🚫 .gitignore                  # File ignorati da Git
+├── requirements.txt
+├── setup.py
+├── README.md
+└── .gitignore
 
 
 # Clone repository
