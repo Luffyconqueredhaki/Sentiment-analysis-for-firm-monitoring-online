@@ -4,17 +4,3 @@ scipy
 matplotlib
 pandas
 huggingface-hub
-```
-
- Click **"Commit new file"**
-
----
-
-1. Click **"Add file"** → **"Create new file"**
-2. Nome file: `.gitignore`
-3. Copia e incolla:
-```
-__pycache__/
-*.pyc
-.ipynb_checkpoints
-model/
