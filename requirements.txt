@@ -1,6 +1,12 @@
-transformers
-torch
-scipy
-matplotlib
-pandas
-huggingface-hub
+# Per il training e inferenza
+transformers==4.40.2
+torch==2.3.0
+datasets==2.19.0
+
+# Per i dati
+pandas==2.2.2
+scikit-learn==1.4.2
+emoji==2.11.1
+
+# Per i test (fondamentale per la CI)
+pytest==8.2.0
