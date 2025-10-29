@@ -1,111 +1,45 @@
-🎯 Obiettivi
+# Progetto MLOps: Sentiment Analysis (Fine-Tuning)
 
-✅ Automazione dell'analisi del sentiment da social media
-✅ Monitoraggio continuo della reputazione aziendale
-✅ Pipeline CI/CD per deploy automatico
-✅ Sistema di retraining automatico del modello
+Questo progetto ha due scopi:
+1.  **Machine Learning:** Fare il fine-tuning di un modello (RoBERTa) per la Sentiment Analysis di tweet.
+2.  **MLOps:** Costruire una pipeline automatica (CI/CD) che testa il codice prima che venga unito.
 
-🔧 Tecnologie Utilizzate
+[![Pipeline CI](https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online/actions/workflows/ci.yml/badge.svg)](https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online/actions/workflows/ci.yml)
 
-Modello: cardiffnlp/twitter-roberta-base-sentiment-latest
-Framework: Transformers (Hugging Face)
-Deploy: Hugging Face Hub
-CI/CD: GitHub Actions
-Linguaggio: Python 3.8+
+---
 
-📂 Struttura del Progetto
-Directory e File
-📓 notebooks/
+## 1. Cosa fa il Notebook (`notebooks/`)
 
-Progetto-HF-GITHUB-PROAI-MLOPS-OTTAVIANI-FLAVIO-RUBENS.ipynb - Notebook principale del progetto
+Il file `.ipynb` che si trova nella cartella `notebooks/` è il **cervello del progetto di Machine Learning**.
 
-🐍 src/ (Codice sorgente)
+È il file dove è stata fatta tutta la sperimentazione. Il suo compito è:
+* **Caricare i Dati:** Scarica e carica il dataset Sentiment140.
+* **Fare il Retraining:** Prende il modello `cardiffnlp/twitter-roberta-base-sentiment-latest` e lo **ri-addestra** sul nostro dataset (passando da 3 a 2 etichette: Positivo/Negativo).
+* **Valutare:** Calcola le metriche di performance (Accuracy, F1-score) e crea i grafici (come la Confusion Matrix) per dimostrare che il modello funziona.
 
-__init__.py - Inizializzazione package
-sentiment_analyzer.py - Classe per l'analisi del sentiment
-data_processor.py - Preprocessing e gestione dati
-utils.py - Funzioni di utilità
+---
 
-📊 data/ (Dataset)
+## 2. Cosa fa la Pipeline (e a cosa servono i file)
 
-sample_tweets.csv - Dataset di esempio con tweet etichettati
+Questa è la **Fase 2 (MLOps)** che abbiamo costruito. Lo scopo è **testare automaticamente il codice**.
 
-🤖 models/ (Modelli ML)
+### `.github/workflows/ci.yml`
+* **A cosa serve:** Questo è il file che **definisce la pipeline CI**.
+* **Cosa fa:** Dà istruzioni a GitHub. Dice: "Ogni volta che Flavio fa un `push`, tu devi fare questo":
+    1.  Avviare un server (`runs-on: ubuntu-latest`).
+    2.  Installare Python (`Set up Python 3.10`).
+    3.  Installare le librerie giuste (leggendo `requirements.txt`).
+    4.  Eseguire i test (lanciando `pytest tests/`).
 
-Cartella per i modelli addestrati salvati localmente
+### `requirements.txt`
+* **A cosa serve:** È la "lista della spesa" delle librerie Python.
+* **Cosa fa:** Garantisce che la pipeline CI (e chiunque altro) usi le **stesse identiche versioni** di `transformers`, `pytest`, `torch`, ecc., per evitare errori.
 
-🔧 scripts/ (Automazione)
+### `src/preprocessing.py`
+* **A cosa serve:** Contiene il codice "pulito" e riutilizzabile.
+* **Cosa fa:** Contiene la funzione `preprocess_social` che abbiamo tolto dal notebook. Mettere il codice qui (invece che in un notebook) permette ai test di **importarlo e controllarlo**.
 
-deploy_to_hf.py - Script per deploy su Hugging Face Hub
-evaluate_model.py - Script per valutazione performance del modello
-monitor_model.py - Script per monitoraggio continuo
-
-✅ tests/ (Testing)
-
-__init__.py - Inizializzazione package test
-test_sentiment_analyzer.py - Unit test per sentiment analyzer
-
-⚙️ .github/workflows/ (CI/CD)
-
-ci-cd.yml - Pipeline automatizzata GitHub Actions
-
-📋 File di configurazione (root)
-
-requirements.txt - Lista dipendenze Python
-setup.py - Configurazione installazione package
-README.md - Documentazione principale
-.gitignore - File esclusi da Git
-
-# Clone repository
-git clone https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online.git
-cd Sentiment-analysis-for-firm-monitoring-online
-
-# Installa dipendenze
-pip install -r requirements.txt
-
-# Utilizzo base
-from src.sentiment_analyzer import SentimentAnalyzer
-
-# Inizializza analyzer
-analyzer = SentimentAnalyzer()
-
-# Analizza un testo
-text = "MachineInnovators Inc. is the best company ever!"
-result = analyzer.analyze(text)
-print(result)
-
-🟢 Positive: Sentiment positivo
-⚪ Neutral: Sentiment neutro
-🔴 Negative: Sentiment negativo
-
-🤗 Modello su Hugging Face
-Il modello è disponibile su: FlavioRubensOttaviani/Sentiment-analysis-for-firm-monitoring-online
-https://huggingface.co/FlavioRubensOttaviani/Sentiment-analysis-for-firm-monitoring-online
-
-Scelte Progettuali
-
-Modello RoBERTa: Pre-addestrato su Twitter, ideale per social media
-Architettura: Sequence classification con 3 classi
-Deploy: Hugging Face per facilità di integrazione
-CI/CD: GitHub Actions per automazione completa
-
-🧪 Testing
-# Esegui i test
-python -m pytest tests/
-
-# Test di coverage
-pytest --cov=src tests/
-
-👥 Autore
-Dr. Flavio Rubens Ottaviani
-
-GitHub: @Luffyconqueredhaki
-Hugging Face: @FlavioRubensOttaviani
-
-📄 Licenza
-MIT License
-🙏 Ringraziamenti
-
-Cardiff NLP per il modello base
-Hugging Face per l'infrastruttura
-ProfessionAI per la formazione e caso studio
+### `tests/test_preprocessing.py`
+* **A cosa serve:** È il file dei **test automatici**.
+* **Cosa fa:** Questo file **controlla** che la funzione in `src/preprocessing.py` funzioni come deve.
+* La pipeline (`ci.yml`) esegue *questo* file. Se tutti i test passano (es. `assert "testo pulito" == "testo pulito"`), la pipeline dà la spunta verde ✅. Se un test fallisce, dà la ❌ rossa e ti avvisa.
