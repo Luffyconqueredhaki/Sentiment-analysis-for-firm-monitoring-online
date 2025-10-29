@@ -25,6 +25,9 @@ jobs:
       - name: Run monitoring script
         run: python monitoring/monitor.py
 
+      - name: Check performance alerts
+        run: python monitoring/alert.py
+
       - name: Commit and push metrics log
         run: |
           git config user.name "github-actions[bot]"
@@ -32,4 +35,5 @@ jobs:
           git add monitoring/metrics_log.csv
           git commit -m "Update metrics log"
           git push
-        continue-on-error: true  # evita errori se non ci sono cambiamenti
+        continue-on-error: true  # evita errori se non ci sono modifiche
+
