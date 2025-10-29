@@ -1,0 +1,35 @@
+name: Daily Model Monitoring
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # esegue ogni giorno alle 8:00 UTC
+  workflow_dispatch:     # eseguibile anche manualmente
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas matplotlib
+
+      - name: Run monitoring script
+        run: python monitoring/monitor.py
+
+      - name: Commit and push metrics log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add monitoring/metrics_log.csv
+          git commit -m "Update metrics log"
+          git push
+        continue-on-error: true  # evita errori se non ci sono cambiamenti
