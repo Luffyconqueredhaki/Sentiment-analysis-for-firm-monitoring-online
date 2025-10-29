@@ -21,11 +21,11 @@ Il file `.ipynb` che si trova nella cartella `notebooks/` è il **cervello del p
 
 ## 2. Cosa fa la Pipeline (e a cosa servono i file)
 
-Questa è la **Fase 2 (MLOps)** che abbiamo costruito. Lo scopo è **testare automaticamente il codice**.
+Questa è la **Fase 2 (MLOps)** costruito. Lo scopo è **testare automaticamente il codice**.
 
 ### `.github/workflows/ci.yml`
 * **A cosa serve:** Questo è il file che **definisce la pipeline CI**.
-* **Cosa fa:** Dà istruzioni a GitHub. Dice: "Ogni volta che Flavio fa un `push`, tu devi fare questo":
+* **Cosa fa:** Dà istruzioni a GitHub. Dice: "Ogni volta che Luffy fa un `push`, tu devi fare questo":
     1.  Avviare un server (`runs-on: ubuntu-latest`).
     2.  Installare Python (`Set up Python 3.10`).
     3.  Installare le librerie giuste (leggendo `requirements.txt`).
@@ -37,7 +37,7 @@ Questa è la **Fase 2 (MLOps)** che abbiamo costruito. Lo scopo è **testare aut
 
 ### `src/preprocessing.py`
 * **A cosa serve:** Contiene il codice "pulito" e riutilizzabile.
-* **Cosa fa:** Contiene la funzione `preprocess_social` che abbiamo tolto dal notebook. Mettere il codice qui (invece che in un notebook) permette ai test di **importarlo e controllarlo**.
+* **Cosa fa:** Contiene la funzione `preprocess_social` che estratta dal notebook. Mettere il codice qui (invece che in un notebook) permette ai test di **importarlo e controllarlo**.
 
 ### `tests/test_preprocessing.py`
 * **A cosa serve:** È il file dei **test automatici**.
