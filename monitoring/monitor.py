@@ -16,7 +16,7 @@ N_SAMPLES = 30
 COMPANY_KEYWORD = "Tesla"
 
 def load_fresh_tweets(keyword):
-    ds = load_dataset("cardiffnlp/tweet_sentiment_multilingual","english",, split="train")
+    ds = load_dataset("cardiffnlp/tweet_sentiment_multilingual","english","Italian", split="train")
     df = ds.to_pandas()
     df = df[df["text"].str.contains(keyword, case=False, na=False)]
     return df.sample(min(N_SAMPLES, len(df)))
