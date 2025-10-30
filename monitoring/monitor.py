@@ -14,14 +14,12 @@ MODEL = "cardiffnlp/twitter-roberta-base-sentiment-latest"
 CSV_PATH = "monitoring/metrics.csv"
 N_SAMPLES = 30
 
-#
-# MODIFICA 1: Ora è una lista di parole da cercare
-#
-COMPANY_KEYWORD = ["happy", "bad", "good", "love"] # Puoi aggiungere quello che vuoi
 
-#
-# MODIFICA 2: La funzione ora accetta una lista e usa la logica "OR"
-#
+#Ora è una lista di parole da cercare
+
+COMPANY_KEYWORD = ["happy", "bad", "good", "love"] 
+#La funzione ora accetta una lista e usa la logica "OR" prima prendeva solo una parola
+
 def load_fresh_tweets(keywords_list):
     print("Loading English tweets...")
     ds_en = load_dataset("cardiffnlp/tweet_sentiment_multilingual", "english", split="train")
@@ -34,16 +32,17 @@ def load_fresh_tweets(keywords_list):
     df = ds.to_pandas()
     
     # Crea una stringa regex: "happy|bad|good|love"
-    # Il simbolo '|' significa 'OR' (o)
+    # Il simbolo '|' significa 'OR'
     search_terms = "|".join(keywords_list)
     print(f"Filtering for tweets containing: {search_terms}")
     
-    # Applica il filtro. regex=True è fondamentale
+    # Applica il filtro. regex=True importante
     df = df[df["text"].str.contains(search_terms, case=False, na=False, regex=True)]
     
     if df.empty:
         print(f"Warning: No tweets found containing any of the keywords.")
-        return df # Ritorna un DataFrame vuoto
+        return df 
+        # DataFrame vuoto
         
     print(f"Found {len(df)} tweets. Sampling {min(N_SAMPLES, len(df))}.")
     return df.sample(min(N_SAMPLES, len(df)))
@@ -60,12 +59,10 @@ def map_prediction(pred):
 
 def run_monitoring():
     print("Loading tweets...")
-    # Passiamo l'intera lista alla funzione
+    # Passo l'intera lista alla funzione
     tweets = load_fresh_tweets(COMPANY_KEYWORD)
 
-    #
-    # MODIFICA 3: Aggiunto controllo di sicurezza per DataFrame vuoto
-    #
+     #Aggiunto controllo di sicurezza per DataFrame vuoto
     if tweets.empty:
         print("No tweets found. Saving metrics as 0.0 and exiting.")
         acc = 0.0
