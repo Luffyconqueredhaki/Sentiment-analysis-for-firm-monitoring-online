@@ -1,6 +1,6 @@
 import pandas as pd
 from transformers import pipeline
-from datasets import load_dataset
+from datasets import load_dataset, concatenate_datasets # Assicurati di avere concatenate_datasets
 from sklearn.metrics import accuracy_score, f1_score
 from datetime import datetime
 import os
@@ -13,12 +13,39 @@ from src.preprocessing import preprocess_social
 MODEL = "cardiffnlp/twitter-roberta-base-sentiment-latest"
 CSV_PATH = "monitoring/metrics.csv"
 N_SAMPLES = 30
-COMPANY_KEYWORD = "Tesla"
 
-def load_fresh_tweets(keyword):
-    ds = load_dataset("cardiffnlp/tweet_sentiment_multilingual","english", split="train")
+#
+# MODIFICA 1: Ora è una lista di parole da cercare
+#
+COMPANY_KEYWORD = ["happy", "bad", "good", "love"] # Puoi aggiungere quello che vuoi
+
+#
+# MODIFICA 2: La funzione ora accetta una lista e usa la logica "OR"
+#
+def load_fresh_tweets(keywords_list):
+    print("Loading English tweets...")
+    ds_en = load_dataset("cardiffnlp/tweet_sentiment_multilingual", "english", split="train")
+    print("Loading Italian tweets...")
+    ds_it = load_dataset("cardiffnlp/tweet_sentiment_multilingual", "italian", split="train")
+    
+    # Combina i due dataset
+    ds = concatenate_datasets([ds_en, ds_it])
+    
     df = ds.to_pandas()
-    df = df[df["text"].str.contains(keyword, case=False, na=False)]
+    
+    # Crea una stringa regex: "happy|bad|good|love"
+    # Il simbolo '|' significa 'OR' (o)
+    search_terms = "|".join(keywords_list)
+    print(f"Filtering for tweets containing: {search_terms}")
+    
+    # Applica il filtro. regex=True è fondamentale
+    df = df[df["text"].str.contains(search_terms, case=False, na=False, regex=True)]
+    
+    if df.empty:
+        print(f"Warning: No tweets found containing any of the keywords.")
+        return df # Ritorna un DataFrame vuoto
+        
+    print(f"Found {len(df)} tweets. Sampling {min(N_SAMPLES, len(df))}.")
     return df.sample(min(N_SAMPLES, len(df)))
 
 def convert_label(label):
@@ -33,17 +60,27 @@ def map_prediction(pred):
 
 def run_monitoring():
     print("Loading tweets...")
+    # Passiamo l'intera lista alla funzione
     tweets = load_fresh_tweets(COMPANY_KEYWORD)
-    tweets["clean"] = tweets["text"].apply(preprocess_social)
-    tweets["true"] = tweets["label"].apply(convert_label)
 
-    clf = pipeline("sentiment-analysis", model=MODEL)
+    #
+    # MODIFICA 3: Aggiunto controllo di sicurezza per DataFrame vuoto
+    #
+    if tweets.empty:
+        print("No tweets found. Saving metrics as 0.0 and exiting.")
+        acc = 0.0
+        f1 = 0.0
+    else:
+        tweets["clean"] = tweets["text"].apply(preprocess_social)
+        tweets["true"] = tweets["label"].apply(convert_label)
 
-    print("Running inference")
-    tweets["pred"] = tweets["clean"].apply(lambda x: map_prediction(clf(x)[0]["label"]))
+        clf = pipeline("sentiment-analysis", model=MODEL)
 
-    acc = accuracy_score(tweets["true"], tweets["pred"])
-    f1 = f1_score(tweets["true"], tweets["pred"])
+        print("Running inference...")
+        tweets["pred"] = tweets["clean"].apply(lambda x: map_prediction(clf(x)[0]["label"]))
+
+        acc = accuracy_score(tweets["true"], tweets["pred"])
+        f1 = f1_score(tweets["true"], tweets["pred"])
 
     print(f"Accuracy: {acc:.4f}, F1: {f1:.4f}")
 
@@ -61,4 +98,3 @@ def run_monitoring():
 
 if __name__ == "__main__":
     run_monitoring()
-
