@@ -8,9 +8,13 @@ on:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    
+    # QUESTA È LA PARTE CHE RISOLVE L'ERRORE 403 OVVERO IN PERMESSI: IL BOT AVEVA PERMESSI SOLO DI LETTURA
+    permissions:
+      contents: write
+      
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install deps
         run: |
@@ -28,5 +32,6 @@ jobs:
           git config --global user.email "bot@example.com"
           git config --global user.name "monitor-bot"
           git add monitoring/metrics.csv
-          git commit -m "Monitoring update" || echo "No changes"
+          # Aggiunto '|| echo ...' per non far fallire lo step se non ci sono modifiche
+          git commit -m "Monitoring update" || echo "No changes to commit"
           git push
