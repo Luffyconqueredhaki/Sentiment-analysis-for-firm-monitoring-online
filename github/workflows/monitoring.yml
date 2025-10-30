@@ -1,0 +1,32 @@
+name: Model Monitoring
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # ogni giorno alle 8
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install deps
+        run: pip install transformers datasets scikit-learn pandas matplotlib torch
+
+      - name: Run monitoring
+        run: python monitoring/monitor.py
+
+      - name: Trigger alert if needed
+        run: python monitoring/alert.py
+
+      - name: Commit metrics
+        run: |
+          git config --global user.email "bot@example.com"
+          git config --global user.name "monitor-bot"
+          git add monitoring/metrics.csv
+          git commit -m "Monitoring update" || echo "No changes"
+          git push
+
+
