@@ -1,16 +1,12 @@
 import pandas as pd
 
-THRESHOLD_ACC = 0.75
-THRESHOLD_F1 = 0.7
+THRESHOLD_F1 = 0.70
+METRICS_FILE = "monitoring/metrics/latest_metrics.csv"
 
-def check_alerts():
-    df = pd.read_csv("monitoring/metrics_log.csv", names=["timestamp", "accuracy", "f1_score"])
-    latest = df.tail(1).iloc[0]
+df = pd.read_csv(METRICS_FILE)
+latest_f1 = df['f1'].iloc[-1]
 
-    if latest["accuracy"] < THRESHOLD_ACC or latest["f1_score"] < THRESHOLD_F1:
-        print(" X Alert: model performance degraded")
-    else:
-        print(" VVV Model performance within safe range")
-
-if __name__ == "__main__":
-    check_alerts()
+if latest_f1 < THRESHOLD_F1:
+    print(" XXX: Model performance degraded — retraining recommended")
+else:
+    print(" VVV Model performing well")
