@@ -48,7 +48,7 @@ The model was trained and evaluated on a sample of 10,000 tweets.
 | **Accuracy** | *~85%* |
 | **F1-Score (Weighted)** | *~85%* |
 
-#IT
+# IT
 # Progetto MLOps: Sentiment Analysis (Fine-Tuning RoBERTa)
 
 Questo repository contiene un progetto completo di MLOps per l'analisi del sentiment dei social media (es. Twitter/X). Il progetto gestisce l'intero ciclo di vita del modello: dall'addestramento e fine-tuning di un modello Transformer (RoBERTa) fino alla pipeline CI/CD per i test automatici e al monitoring continuo.
