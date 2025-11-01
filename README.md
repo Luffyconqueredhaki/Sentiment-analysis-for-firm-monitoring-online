@@ -1,3 +1,54 @@
+# ENG
+# Social Media Sentiment Analysis (Fine-tuned)
+
+This is a `cardiffnlp/twitter-roberta-base-sentiment-latest` model that has been **re-trained (fine-tuned)** for binary sentiment classification (Positive vs. Negative).
+
+The original model was trained for 3 classes (Positive, Negative, Neutral). This model was specialized using the [Sentiment140](http://help.sentiment140.com/for-students) dataset to recognize only **Positive** or **Negative** sentiment, making it ideal for corporate reputation monitoring.
+
+The GitHub repository with all the training code and MLOps pipeline can be found here:
+[https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online](https://github.com/Luffyconqueredhaki/Sentiment-analysis-for-firm-monitoring-online)
+
+# MLOps Project: Sentiment Analysis (RoBERTa Fine-Tuning)
+
+This repository contains a complete MLOps project for social media sentiment analysis (e.g., Twitter/X). The project manages the entire model lifecycle: from training and fine-tuning a Transformer model (RoBERTa) to a CI/CD pipeline for automated testing and continuous monitoring.
+
+## 🎯 Project Description and Use Cases
+
+This project analyzes social media sentiment to monitor online reputation. The core of the system is a **Transformer (RoBERTa)** model (`cardiffnlp/twitter-roberta-base-sentiment-latest`), specialized in understanding the nuances of social language.
+
+The base model, which classifies into 3 classes (Positive, Negative, Neutral), is **re-trained (fine-tuned)** on the Sentiment140 dataset to further specialize it and adapt it to only 2 classes (Positive/Negative).
+
+The entire model lifecycle is managed through a **complete MLOps flow**, including training, automated testing (CI/CD), and continuous performance monitoring.
+
+### Key Use Cases
+
+* **Brand Reputation Management:** Track public perception (positive or negative) of a company or product in real-time.
+* **Customer Feedback Analysis:** Extract actionable insights from thousands of product, app (App Store, Play Store), or service reviews.
+* **Market Research:** Understand public opinion on specific topics, industry trends, or competitors.
+* **Campaign Monitoring:** Evaluate the impact and reception (positive or negative) of a marketing campaign or event.
+
+---
+
+## 1. The Experimentation Notebook (notebooks/)
+
+The `.ipynb` file in the `notebooks/` folder is the **brain of the Machine Learning project**. It's where all the experimentation was done.
+
+* **Load Data:** Downloads and loads the Sentiment140 dataset.
+* **Retraining (Fine-Tuning):** Takes the `cardiffnlp/twitter-roberta-base-sentiment-latest` model and re-trains it on our dataset, moving from 3 to 2 labels (Positive/Negative).
+* **Evaluate:** Calculates performance metrics (Accuracy, F1-score) and creates plots (like the Confusion Matrix) to demonstrate the model's effectiveness.
+
+## Performance and Metrics
+
+The model was trained and evaluated on a sample of 10,000 tweets.
+
+*(The exact metric values can be found in the training notebook. Insert your results here)*
+
+| Metric | Value (on Test Set) |
+|---|---|
+| **Accuracy** | *~85%* |
+| **F1-Score (Weighted)** | *~85%* |
+
+#IT
 # Progetto MLOps: Sentiment Analysis (Fine-Tuning RoBERTa)
 
 Questo repository contiene un progetto completo di MLOps per l'analisi del sentiment dei social media (es. Twitter/X). Il progetto gestisce l'intero ciclo di vita del modello: dall'addestramento e fine-tuning di un modello Transformer (RoBERTa) fino alla pipeline CI/CD per i test automatici e al monitoring continuo.
